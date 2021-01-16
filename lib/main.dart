@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dTypes.dart';
+import 'gamePage.dart';
 
 void main() {
   runApp(MyApp());
@@ -107,35 +108,41 @@ class GameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Container(
-        padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-            border: Border(), color: Color.fromARGB(100, 255, 50, 255)),
-        child: Row(children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text(g.title, style: TextStyle(fontSize: 18))],
-              ),
-              SizedBox(height: 15),
-              Row(
-                children: [
-                  Text(g.tags.length.toString() + " tasks"),
-                  SizedBox(width: 10),
-                  Text(g.numPlayers.toString() + " players"),
-                ],
-              )
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text("0/" + g.getTotalScore(mem).toString(),
-                  style: TextStyle(fontSize: 18))
-            ],
-          ),
-        ]),
+      child: InkWell(
+        onLongPress: () {
+          print("tap!");
+          openGamePage(context);
+        },
+        child: Container(
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+              border: Border(), color: Color.fromARGB(100, 255, 50, 255)),
+          child: Row(children: [
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text(g.title, style: TextStyle(fontSize: 18))],
+                ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Text(g.tags.length.toString() + " tasks"),
+                    SizedBox(width: 10),
+                    Text(g.numPlayers.toString() + " players"),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text("0/" + g.getTotalScore(mem).toString(),
+                    style: TextStyle(fontSize: 18))
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
