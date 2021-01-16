@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dTypes.dart';
 import 'gamePage.dart';
 import 'package:scavenger/globals.dart' as global;
+import 'profilePage.dart';
 
 void main() {
   Tag a = new Tag("Un chien", "dog", 17);
@@ -73,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [UserButton()],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -159,5 +161,19 @@ class GameCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class UserButton extends StatelessWidget {
+  const UserButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              openProfilePage(context);
+            }));
   }
 }
