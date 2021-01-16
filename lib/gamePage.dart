@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'cameraPage.dart';
 import 'package:flutter/material.dart';
 import 'package:scavenger/dTypes.dart';
 
@@ -55,7 +55,10 @@ class _GamePageState extends State<GamePage> {
                           border: Border.all(color: Colors.black38),
                           shape: BoxShape.circle),
                       child: IconButton(
-                          icon: Icon(Icons.camera_alt), onPressed: () {})),
+                          icon: Icon(Icons.camera_alt),
+                          onPressed: () {
+                            openCameraPage(context, widget.mem, widget.g);
+                          })),
                   SizedBox(height: 20),
                   Text("Tags to find: "),
                   Container(

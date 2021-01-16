@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dTypes.dart';
 import 'gamePage.dart';
+import 'package:camera/camera.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -31,8 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -40,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
     });
     Tag a = new Tag("Chapeau", "hat", 17);
     widget.mem.tTable[a.id] = a;
