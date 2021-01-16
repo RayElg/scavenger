@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'cameraPage.dart';
 import 'package:flutter/material.dart';
 import 'package:scavenger/dTypes.dart';
+import 'package:scavenger/globals.dart';
 
 openGamePage(context, mem, g) {
   Navigator.push(context,
@@ -11,6 +12,7 @@ openGamePage(context, mem, g) {
 class GamePage extends StatefulWidget {
   final Game g;
   final MainMem mem;
+
   GamePage({Key key, @required this.mem, @required this.g}) : super(key: key);
 
   @override
@@ -18,8 +20,17 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  callBack() {
+    setState(() {
+      l = l;
+      print(l.toString());
+    });
+  }
+
+  List<String> l = [];
   @override
   Widget build(BuildContext context) {
+    setGamePageSetState(callBack);
     return Scaffold(
       appBar: AppBar(title: Text(widget.g.title)),
       body: Container(
@@ -57,8 +68,16 @@ class _GamePageState extends State<GamePage> {
                       child: IconButton(
                           icon: Icon(Icons.camera_alt),
                           onPressed: () {
-                            openCameraPage(context, widget.mem, widget.g);
+                            openCameraPage(
+                                context, widget.mem, widget.g, l, callBack);
                           })),
+                  SizedBox(height: 10),
+                  SizedBox(
+                      height: 15,
+                      child: ListView(
+                        children: [Text(l.toString())],
+                        scrollDirection: Axis.horizontal,
+                      )),
                   SizedBox(height: 20),
                   Text("Tags to find: "),
                   Container(

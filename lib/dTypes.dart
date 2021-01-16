@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/rendering.dart';
-
 class Game {
   String id; //Random id for reference
   String title;

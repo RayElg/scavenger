@@ -9,15 +9,19 @@ import 'package:camera/camera.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
-Future<void> openCameraPage(context, mem, g) async {
+import 'package:scavenger/reqs.dart';
+import 'package:scavenger/globals.dart' as globals;
+
+Future<void> openCameraPage(context, mem, g, l, callback) async {
   final cameras = await availableCameras();
   Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CameraPage(mem: mem, g: g, cams: cameras)));
+          builder: (context) => CameraPage(
+              mem: mem, g: g, cams: cameras, l: l, callback: callback)));
 }
 
-Future<void> takePicture(initController, controller, context) async {
+Future<List<String>> takePicture(initController, controller, context) async {
   try {
     await initController;
     //Make path
@@ -29,16 +33,14 @@ Future<void> takePicture(initController, controller, context) async {
     final bin = await File(path).readAsBytes();
     String encoded = base64Encode(bin);
     print("ENCODED LENGTH: " + encoded.length.toString());
+    List labels = await getLabels(encoded);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DisplayPictureScreen(imagePath: path),
-      ),
-    );
+    Navigator.pop(context);
+    return labels;
   } catch (error) {
     // SOMETHING WENT WRONG
     print(error);
+    return [];
   }
 }
 
@@ -46,12 +48,16 @@ class CameraPage extends StatefulWidget {
   final MainMem mem;
   final Game g;
   final cams;
-  CameraPage({
-    Key key,
-    @required this.mem,
-    @required this.g,
-    @required this.cams,
-  }) : super(key: key);
+  List<String> l;
+  Function callback;
+  CameraPage(
+      {Key key,
+      @required this.mem,
+      @required this.g,
+      @required this.cams,
+      @required this.l,
+      @required this.callback})
+      : super(key: key);
 
   @override
   _CameraPageState createState() => _CameraPageState();
@@ -97,7 +103,10 @@ class _CameraPageState extends State<CameraPage> {
               iconSize: 40,
               icon: Icon(Icons.camera),
               onPressed: () async {
-                takePicture(initController, controller, context);
+                widget.l.addAll(
+                    await takePicture(initController, controller, context));
+                print("Pic taken. L: " + widget.l.toString());
+                globals.gamePageSetState();
               })),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

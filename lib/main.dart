@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dTypes.dart';
 import 'gamePage.dart';
-import 'package:camera/camera.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
