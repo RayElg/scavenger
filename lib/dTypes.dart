@@ -14,6 +14,7 @@ class Game {
     this.title = title;
     this.tags = tags;
     this.numPlayers = 0;
+    this.description = description;
 
     var rands = List<int>.generate(32, (i) => Random.secure().nextInt(255));
     this.id = base64Url.encode(rands);

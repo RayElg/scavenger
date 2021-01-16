@@ -109,9 +109,10 @@ class GameCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: InkWell(
+        // Makes this container a button
         onLongPress: () {
           print("tap!");
-          openGamePage(context);
+          openGamePage(context, mem, g);
         },
         child: Container(
           padding: EdgeInsets.all(15),
