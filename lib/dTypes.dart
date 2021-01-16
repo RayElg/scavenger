@@ -56,12 +56,12 @@ class Tag {
   String title; //What is this object called?
   String tag; //What is the actual tag descriptor for this object
   String gameId;
-  List<String> hasScored;
+  Set<String> hasScored;
   int value;
   Tag(String title, String tag, int value) {
     this.title = title;
     this.tag = tag;
-    this.hasScored = [];
+    this.hasScored = {};
     this.value = value;
 
     var rands = List<int>.generate(32, (i) => Random.secure().nextInt(255));

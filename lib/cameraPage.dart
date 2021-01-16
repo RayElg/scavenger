@@ -103,6 +103,7 @@ class _CameraPageState extends State<CameraPage> {
               iconSize: 40,
               icon: Icon(Icons.camera),
               onPressed: () async {
+                widget.l.clear();
                 widget.l.addAll(
                     (await takePicture(initController, controller, context))
                         .map(upper)

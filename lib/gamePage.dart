@@ -54,7 +54,12 @@ class _GamePageState extends State<GamePage> {
                 SizedBox(
                   width: 10,
                 ),
-                Text("0/" + widget.g.getTotalScore(widget.mem).toString(),
+                Text(
+                    widget.g
+                            .getUserScore(widget.mem, currentUser.id)
+                            .toString() +
+                        "/" +
+                        widget.g.getTotalScore(widget.mem).toString(),
                     style: TextStyle(fontSize: 18))
               ],
             ),
