@@ -104,13 +104,19 @@ class _CameraPageState extends State<CameraPage> {
               icon: Icon(Icons.camera),
               onPressed: () async {
                 widget.l.addAll(
-                    await takePicture(initController, controller, context));
+                    (await takePicture(initController, controller, context))
+                        .map(upper)
+                        .toList());
                 print("Pic taken. L: " + widget.l.toString());
                 globals.gamePageSetState();
               })),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+}
+
+String upper(String str) {
+  return str.toUpperCase();
 }
 
 // A widget that displays the picture taken by the user.

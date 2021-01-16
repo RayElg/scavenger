@@ -5,17 +5,25 @@ class Game {
   String id; //Random id for reference
   String title;
   List<String> tags; //Tag ids
-  int numPlayers; //How many players?
+  //int numPlayers; //How many players?
   String description; //Author-provided description
 
   Game(String title, List<String> tags, String description) {
     this.title = title;
     this.tags = tags;
-    this.numPlayers = 0;
+    //this.numPlayers = 0;
     this.description = description;
 
     var rands = List<int>.generate(32, (i) => Random.secure().nextInt(255));
     this.id = base64Url.encode(rands);
+  }
+
+  int numPlayers(MainMem mem) {
+    List<int> tagPlayers = [];
+    for (String tag in this.tags) {
+      tagPlayers.add(mem.tTable[tag].hasScored.length);
+    }
+    return tagPlayers.reduce(max);
   }
 
   int getTotalScore(MainMem mem) {
@@ -23,6 +31,20 @@ class Game {
     for (String t in this.tags) {
       if (mem.tTable.containsKey(t)) {
         score += mem.tTable[t].value;
+      }
+    }
+    return score;
+  }
+
+  int getUserScore(MainMem mem, String uId) {
+    int score = 0;
+    for (String t in this.tags) {
+      if (mem.tTable.containsKey(t)) {
+        if (mem.tTable[t].hasScored.contains(uId)) {
+          score += mem.tTable[t].value;
+        } else {
+          print(mem.tTable[t].hasScored.toString() + " NOT EQUALS: " + uId);
+        }
       }
     }
     return score;

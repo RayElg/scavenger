@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dTypes.dart';
 import 'gamePage.dart';
+import 'package:scavenger/globals.dart' as global;
 
 void main() {
+  User u = new User("raynor");
+  global.setUser(u);
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -17,16 +20,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Scavenger: Games'),
+      home: MyHomePage(
+        title: 'Scavenger: Games',
+        mem: global.memory,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  MainMem mem = new MainMem();
+  MyHomePage({Key key, this.title, @required this.mem}) : super(key: key);
+  final MainMem mem;
   final String title;
-  User u = new User("raynor");
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -41,9 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
     });
     Tag a = new Tag("Chapeau", "hat", 17);
+    Tag b = new Tag("Un crayon", "pencil", 15);
     widget.mem.tTable[a.id] = a;
-    Game g =
-        new Game("Scavenger Hunt!", [a.id], "Its a scavenger hunt, of course!");
+    widget.mem.tTable[b.id] = b;
+    Game g = new Game(
+        "Scavenger Hunt!", [a.id, b.id], "Its a scavenger hunt, of course!");
 
     a.gameId = g.id;
     print(g.id);
@@ -52,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    global.setMainSetState(_incrementCounter);
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -115,8 +124,11 @@ class GameCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              border: Border(), color: Color.fromARGB(100, 255, 50, 255)),
-          child: Row(children: [
+              border: Border.all(),
+              color: Colors.black12,
+              borderRadius: BorderRadius.circular(4)),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Column(
               children: [
                 Row(
@@ -128,7 +140,7 @@ class GameCard extends StatelessWidget {
                   children: [
                     Text(g.tags.length.toString() + " tasks"),
                     SizedBox(width: 10),
-                    Text(g.numPlayers.toString() + " players"),
+                    Text(g.numPlayers(mem).toString() + " players"),
                   ],
                 )
               ],
@@ -136,7 +148,10 @@ class GameCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("0/" + g.getTotalScore(mem).toString(),
+                Text(
+                    g.getUserScore(mem, global.currentUser.id).toString() +
+                        "/" +
+                        g.getTotalScore(mem).toString(),
                     style: TextStyle(fontSize: 18))
               ],
             ),

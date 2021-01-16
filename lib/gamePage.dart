@@ -22,8 +22,16 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   callBack() {
     setState(() {
-      l = l;
       print(l.toString());
+      for (String t in widget.g.tags) {
+        if (l.contains(widget.mem.tTable[t].tag.toUpperCase())) {
+          print("Match!" + widget.mem.tTable[t].tag.toUpperCase());
+          widget.mem.tTable[t].hasScored.add(currentUser.id);
+        } else {
+          print("No match: " + widget.mem.tTable[t].tag.toUpperCase());
+        }
+      }
+      mainSetState();
     });
   }
 
@@ -90,6 +98,10 @@ class _GamePageState extends State<GamePage> {
                               Divider(),
                               Row(
                                 children: [
+                                  Icon(widget.mem.tTable[t].hasScored
+                                          .contains(currentUser.id)
+                                      ? Icons.check_box
+                                      : Icons.check_box_outline_blank),
                                   Text(
                                     widget.mem.tTable[t].title +
                                         " - " +
