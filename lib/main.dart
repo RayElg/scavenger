@@ -17,6 +17,7 @@ void main() {
   global.memory.gTable[g.id] = g;
   User u = new User("raynor");
   global.setUser(u);
+  global.memory.uTable[u.id] = u;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }

@@ -85,8 +85,10 @@ class MainMem {
   //Later we will integrate this with cockroachDB
   Map<String, Game> gTable;
   Map<String, Tag> tTable;
+  Map<String, User> uTable;
   MainMem() {
     this.gTable = new Map<String, Game>();
     this.tTable = new Map<String, Tag>();
+    this.uTable = new Map<String, User>();
   }
 }
