@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
     global.setUser(u);
     global.memory.uTable[u.id] = u;
     global.memory.loadJson();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -60,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    global.width = MediaQuery.of(context).size.width;
+    global.height = MediaQuery.of(context).size.height;
+
     global.setMainSetState(callBack);
     global.mainEmptySetState = emptyCallBack;
     return Scaffold(
@@ -80,13 +84,22 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView(
                 children: [
                   for (Game g in widget.mem.gTable.values)
-                    GameCard(g: g, mem: widget.mem),
-                  IconButton(
-                      icon: Icon(Icons.donut_small),
-                      onPressed: () {
-                        global.memory.loadJson();
-                        setState(() {});
-                      })
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: (global.width * 0.03),
+                          right: global.width * 0.03),
+                      child: Column(children: [
+                        Divider(
+                          thickness: 1,
+                          color: Colors.black26,
+                        ),
+                        GameCard(g: g, mem: widget.mem)
+                      ]),
+                    ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.black26,
+                  ),
                 ],
               ),
             )
@@ -115,7 +128,7 @@ class GameCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(1.0),
       child: InkWell(
         // Makes this container a button
         onLongPress: () {
@@ -125,15 +138,16 @@ class GameCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              border: Border.all(),
-              color: Colors.black12,
-              borderRadius: BorderRadius.circular(4)),
+              //border: Border.all(),
+              //color: Colors.black12,
+              /*borderRadius: BorderRadius.circular(4)*/),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [Text(g.title, style: TextStyle(fontSize: 18))],
                 ),
                 SizedBox(height: 15),
@@ -152,10 +166,11 @@ class GameCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                    g.getUserScore(mem, global.currentUser.id).toString() +
-                        "/" +
-                        g.getTotalScore(mem).toString(),
-                    style: TextStyle(fontSize: 18))
+                  g.getUserScore(mem, global.currentUser.id).toString() +
+                      "/" +
+                      g.getTotalScore(mem).toString(),
+                  style: TextStyle(fontSize: 18, color: Colors.green),
+                )
               ],
             ),
           ]),

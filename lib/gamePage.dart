@@ -46,21 +46,21 @@ class _GamePageState extends State<GamePage> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   widget.g.title,
                   style: TextStyle(fontSize: 30),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
                 Text(
-                    widget.g
-                            .getUserScore(widget.mem, currentUser.id)
-                            .toString() +
-                        "/" +
-                        widget.g.getTotalScore(widget.mem).toString(),
-                    style: TextStyle(fontSize: 18))
+                  widget.g.getUserScore(widget.mem, currentUser.id).toString() +
+                      "/" +
+                      widget.g.getTotalScore(widget.mem).toString(),
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.green),
+                )
               ],
             ),
             SizedBox(height: 18),
@@ -74,21 +74,26 @@ class _GamePageState extends State<GamePage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black38),
-                          shape: BoxShape.circle),
-                      child: IconButton(
-                          icon: Icon(Icons.camera_alt),
-                          onPressed: () {
-                            openCameraPage(
-                                context, widget.mem, widget.g, l, callBack);
-                          })),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black38),
+                              shape: BoxShape.circle),
+                          child: IconButton(
+                              icon: Icon(Icons.camera_alt),
+                              onPressed: () {
+                                openCameraPage(
+                                    context, widget.mem, widget.g, l, callBack);
+                              })),
+                    ],
+                  ),
                   SizedBox(height: 10),
                   SizedBox(
-                      height: 15,
+                      height: width * 0.08,
                       child: ListView(
-                        children: [Text(l.toString())],
+                        children: [Text(l.length == 0 ? " " : l.toString())],
                         scrollDirection: Axis.horizontal,
                       )),
                   SizedBox(height: 20),

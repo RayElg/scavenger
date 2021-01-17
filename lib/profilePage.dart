@@ -25,6 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [Text("Login or Register")],
         ),
         SizedBox(height: 15),
+        Text("Note: This login page is for the demo, so there is no password."),
+        SizedBox(height: 15),
         Text("Logged in as: ${currentUser.name}"),
         SizedBox(height: 15),
         Row(
