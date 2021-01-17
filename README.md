@@ -11,6 +11,10 @@ We built the frontend for the app in Flutter/dart, and the backend in php/python
 
 After the user captures an image, it is encoded as a base64 String, and sent in a POST request to google vision. Google vision handles the labeling of the data, and sends back some labels. If any of the labels match the scavenger hunt, the user is awarded points.
 
+**Backend code: in ./py scripts/**  
+**Frontend code: everywhere else**    
+**What's not here: auth.dart (holds api key)**  
+
 ## Challenges we ran into
 
 1) Issues with the remote cockroachDB cluster (luckily we could spin up a local one)
