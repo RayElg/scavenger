@@ -1,16 +1,36 @@
-# scavenger
+# Scavenger
 
-A new Flutter project.
+## What it does
+Scavenger provides a platform for users to create & participate together in scavenger hunts. Users capture their findings with their phone camera, and the app automatically checks the items off the list.
 
-## Getting Started
+Scavenger provides the option for regular games (for fun!), or for games with alternate labels (for learning!). A french teacher could example add "Stylo" to their scavenger hunt, with students able to check this item off by taking a picture of a pen.
 
-This project is a starting point for a Flutter application.
+## How we built it
 
-A few resources to get you started if this is your first Flutter project:
+We built the frontend for the app in Flutter/dart, and the backend in php/python using a local cockroachDB cluster to store data. 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+After the user captures an image, it is encoded as a base64 String, and sent in a POST request to google vision. Google vision handles the labeling of the data, and sends back some labels. If any of the labels match the scavenger hunt, the user is awarded points.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Challenges we ran into
+
+1) Issues with the remote cockroachDB cluster (luckily we could spin up a local one)
+2) Our relatively nice code slowly becoming spaghetti
+
+## Accomplishments that we're proud of
+
+It works(!), and is well integrated with the database backend and the vision API. It's something that we actually want and plan to use!
+
+## What we learned
+
+Mitch: Flutter
+Asgar: CockroachDB & PostGreSQL
+Raynor: HTTP & GCP API
+
+
+## What's next for Scavenger
+
+* Beautification
+* Proper login (not just the mockup we currently have)
+* Smooth the process
+* Migrate google vision API request to backend (so we can actually release the .apk without worrying about leaking our key)
+* Clean up ugly code
