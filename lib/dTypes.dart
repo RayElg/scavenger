@@ -115,9 +115,13 @@ class MainMem {
     final List tags = ret["tags"];
     tags.forEach((element) {
       if (!this.tTable.containsKey(element["id"])) {
-        Tag t = Tag(element["title"], element["tag"], element["value"],
+        Tag t = Tag(element["title"].replaceAll("-", " "),
+            element["tag"].replaceAll("-", " "), element["value"],
             id: element["id"]);
-        t.hasScored = element["hasScored"].split(",").toSet();
+
+        t.hasScored = (element["hasScored"].length > 0)
+            ? element["hasScored"].split(",").toSet()
+            : new Set();
         print(
             "hasScored: " + element["hasScored"].split(",").toSet().toString());
         print("T id:" + t.id);
@@ -134,8 +138,11 @@ class MainMem {
     games.forEach((element) {
       print(element["tags"]);
       Game g = Game(
-          element["title"], element["tags"].split(","), element["description"],
-          id: element["id"], author: element["host"]);
+          element["title"].replaceAll("-", " "),
+          element["tags"].split(","),
+          element["description"].replaceAll("-", " "),
+          id: element["id"],
+          author: element["host"]);
       this.gTable[g.id] = g;
     });
 

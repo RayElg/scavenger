@@ -5,6 +5,7 @@ import 'dTypes.dart';
 import 'gamePage.dart';
 import 'package:scavenger/globals.dart' as global;
 import 'profilePage.dart';
+import 'addGame.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: callBack,
+        onPressed: () {
+          openAddGamePage(context);
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

@@ -38,7 +38,7 @@ Future<List<dynamic>> getLabels(String b64) async {
 
 Future<Map<String, dynamic>> getTables() async {
   final ret = await http.get(
-    "https://raynorelgie.com/scavenger/api.php?req=fakeGET",
+    "https://raynorelgie.com/scavenger/api.php?req=get",
     headers: <String, String>{
       "Content-Type": "application/json; charset=UTF-8"
     },
@@ -60,9 +60,9 @@ Future<bool> addGame(String id, String title, String description,
       "https://raynorelgie.com/scavenger/api.php?req=update&args=Game $id $title $description $t $host");
 }
 
-Future<bool> addTag(String title, String tag, List<String> hasScored, int value,
+Future<bool> addTag(String title, String tag, Set<String> hasScored, int value,
     String id) async {
-  String h = hasScored.join(",");
+  String h = (hasScored.length == 0) ? "," : hasScored.join(",");
   await http.get(
       "https://raynorelgie.com/scavenger/api.php?req=update&args=Tags $id $title $tag $value $h");
 }
@@ -70,6 +70,9 @@ Future<bool> addTag(String title, String tag, List<String> hasScored, int value,
 Future<bool> updateTag(String title, String tag, Set<String> hasScored,
     int value, String id) async {
   String h = hasScored.join(",");
+  if (h.substring(0, 0) == ",") {
+    h = h.substring(1, h.length);
+  }
   await http.get(
-      "https://raynorelgie.com/scavenger/api.php?req=update&args=TagsUpdate $id $title $tag $value $h");
+      "https://raynorelgie.com/scavenger/api.php?req=update&args=TagsUpdate $id ${title.replaceAll(" ", "-")} ${tag.replaceAll(" ", "-")} $value $h");
 }
