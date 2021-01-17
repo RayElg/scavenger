@@ -167,8 +167,11 @@ if __name__ == "__main__":
     main()
 
 
+#'postgresql://<username>:<password>@<hostname>:<port>/bank?sslmode=require'
 #'postgresql://<bilal>:<JINXMAIN123A>@<free-tier.gcp-us-central1.cockroachlabs.cloud>:<26257>/bank?sslmode=require'
 
 
 #'cockroach sql --url 'postgres://bilal:JINXMAIN123A@free-tier.gcp-us-central1.cockroachlabs.cloud:26257/vital-sheep-224.defaultdb?sslmode=verify-full&sslrootcert=C:\Users\Asy\Desktop\roachDB/cc-ca.crt'
 
+#password no longer JINXMAIN123A 
+#new passoword BASEDBOYSHackTheNorth
