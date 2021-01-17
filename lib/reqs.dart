@@ -47,3 +47,29 @@ Future<Map<String, dynamic>> getTables() async {
   final body = jsonDecode(ret.body);
   return body;
 }
+
+Future<bool> addUser(String name, String id) async {
+  await http.get(
+      "https://raynorelgie.com/scavenger/api.php?req=update&args=Players $id $name");
+}
+
+Future<bool> addGame(String id, String title, String description,
+    List<String> tags, String host) async {
+  String t = tags.join(",");
+  await http.get(
+      "https://raynorelgie.com/scavenger/api.php?req=update&args=Game $id $title $description $t $host");
+}
+
+Future<bool> addTag(String title, String tag, List<String> hasScored, int value,
+    String id) async {
+  String h = hasScored.join(",");
+  await http.get(
+      "https://raynorelgie.com/scavenger/api.php?req=update&args=Tags $id $title $tag $value $h");
+}
+
+Future<bool> updateTag(String title, String tag, Set<String> hasScored,
+    int value, String id) async {
+  String h = hasScored.join(",");
+  await http.get(
+      "https://raynorelgie.com/scavenger/api.php?req=update&args=TagsUpdate $id $title $tag $value $h");
+}

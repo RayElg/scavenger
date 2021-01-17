@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:scavenger/reqs.dart';
+
 import 'cameraPage.dart';
 import 'package:flutter/material.dart';
 import 'package:scavenger/dTypes.dart';
@@ -27,6 +29,8 @@ class _GamePageState extends State<GamePage> {
         if (l.contains(widget.mem.tTable[t].tag.toUpperCase())) {
           print("Match!" + widget.mem.tTable[t].tag.toUpperCase());
           widget.mem.tTable[t].hasScored.add(currentUser.id);
+          Tag tag = widget.mem.tTable[t];
+          updateTag(tag.title, tag.tag, tag.hasScored, tag.value, tag.id);
         } else {
           print("No match: " + widget.mem.tTable[t].tag.toUpperCase());
         }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scavenger/globals.dart';
 import 'dTypes.dart';
+import 'reqs.dart';
 
 void openProfilePage(context) {
   Navigator.push(
@@ -72,6 +73,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     User u = User(controller.text);
                     currentUser = u;
                     memory.uTable[u.id] = u;
+
+                    addUser(u.name, u.id);
+
                     mainSetState();
                     setState(() {});
                   }
