@@ -38,9 +38,12 @@ Future<List<dynamic>> getLabels(String b64) async {
 
 Future<Map<String, dynamic>> getTables() async {
   final ret = await http.get(
-    "https://raynorelgie.com/scavenger/api.php?\"req\"=\"get\"",
+    "https://raynorelgie.com/scavenger/api.php?req=fakeGET",
     headers: <String, String>{
       "Content-Type": "application/json; charset=UTF-8"
     },
   );
+  print(ret.body);
+  final body = jsonDecode(ret.body);
+  return body;
 }

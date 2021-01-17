@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dTypes.dart';
 import 'gamePage.dart';
@@ -5,19 +7,6 @@ import 'package:scavenger/globals.dart' as global;
 import 'profilePage.dart';
 
 void main() {
-  Tag a = new Tag("Un chien", "dog", 17);
-  Tag b = new Tag("Un crayon", "pencil", 15);
-  global.memory.tTable[a.id] = a;
-  global.memory.tTable[b.id] = b;
-  Game g = new Game(
-      "Scavenger Hunt!", [a.id, b.id], "Its a scavenger hunt, of course!");
-
-  a.gameId = g.id;
-  print(g.id);
-  global.memory.gTable[g.id] = g;
-  User u = new User("raynor");
-  global.setUser(u);
-  global.memory.uTable[u.id] = u;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -26,6 +15,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    User u = new User("GUEST");
+    global.setUser(u);
+    global.memory.uTable[u.id] = u;
+    global.memory.loadJson();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -41,7 +34,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title, @required this.mem}) : super(key: key);
+  MyHomePage({Key key, this.title, this.mem}) : super(key: key);
   final MainMem mem;
   final String title;
 
@@ -52,24 +45,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   void callBack() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+      global.memory.loadJson();
     });
+  }
+
+  void emptyCallBack() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     global.setMainSetState(callBack);
-    // This method is rerun every time setState is called, for instance as done
-    // by the callBack method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-
+    global.mainEmptySetState = emptyCallBack;
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -89,6 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   for (Game g in widget.mem.gTable.values)
                     GameCard(g: g, mem: widget.mem),
+                  IconButton(
+                      icon: Icon(Icons.donut_small),
+                      onPressed: () {
+                        global.memory.loadJson();
+                        setState(() {});
+                      })
                 ],
               ),
             )
@@ -144,6 +142,8 @@ class GameCard extends StatelessWidget {
                     Text(g.tags.length.toString() + " tasks"),
                     SizedBox(width: 10),
                     Text(g.numPlayers(mem).toString() + " players"),
+                    SizedBox(width: 10),
+                    Text("Hosted by " + g.author),
                   ],
                 )
               ],
